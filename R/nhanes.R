@@ -81,6 +81,10 @@ lodown_nhanes <-
 			# convert all column names to lowercase
 			names( x ) <- tolower( names( x ) )
 
+			if (!dir.exists(dirname(catalog$output_filename[i]))) {
+			  dir.create(dirname(catalog$output_filename[i]))
+			}
+
 			saveRDS( x , file = catalog[ i , 'output_filename' ] , compress = FALSE )
 
 			catalog[ i , 'case_count' ] <- nrow( x )
