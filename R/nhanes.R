@@ -43,7 +43,7 @@ get_catalog_nhanes <-
 
 		catalog <- rbind( catalog , ayd )
 
-		catalog$output_filename <- paste0( output_dir , "/" , catalog$years , "/" , tolower( gsub( "\\.xpt" , ".rds" , basename( catalog$full_url ) , ignore.case = TRUE ) ) )
+		catalog$output_filename <- paste0( output_dir , "/" , catalog$years , "/" , tolower( gsub( "\\.xpt" , ".csv" , basename( catalog$full_url ) , ignore.case = TRUE ) ) )
 
 		catalog <- catalog[ order( catalog[ , 'years' ] ) , ]
 
@@ -81,11 +81,14 @@ lodown_nhanes <-
 			# convert all column names to lowercase
 			names( x ) <- tolower( names( x ) )
 
+			# create directory if needed prior to saving file
 			if (!dir.exists(dirname(catalog$output_filename[i]))) {
 			  dir.create(dirname(catalog$output_filename[i]))
 			}
 
-			saveRDS( x , file = catalog[ i , 'output_filename' ] , compress = FALSE )
+			# save file as csv rather than RDS
+			# saveRDS( x , file = catalog[ i , 'output_filename' ] , compress = FALSE )
+			write_csv(x, catalog[ i , 'output_filename' ])
 
 			catalog[ i , 'case_count' ] <- nrow( x )
 
