@@ -7,7 +7,7 @@ get_catalog_nhanes <-
 
 		this_table <- rvest::html_table( data_html )[[1]] #changed from [[2]] to allow download to work
 
-		names( this_table ) <- c( 'years' , 'data_name' , 'doc_name' , 'file_name' , 'date_published' )
+		names( this_table ) <- c( 'years' , 'doc_name' , 'file_name' , 'date_published' )
 
 
 		all_links <- rvest::html_nodes( data_html , "a" )
